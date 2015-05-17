@@ -16,7 +16,7 @@ class MoviesController
 
   def add(name)
     name_cleaned = name.strip
-    scenario = Movie.new(name_cleaned)
+    movie = Movie.new(name_cleaned)
     if movie.save
       "\"#{name}\" has been added\n"
     else

@@ -1,4 +1,41 @@
 #!/usr/bin/env ruby
-
 require 'highline/import'
-	puts "Hello Wovfcvdbfbgvcxdsfdbfvcrld"
+
+Dir["./app/**/*.rb"].each { |f| require f }
+Dir["./lib/*.rb"].each { |f| require f }
+
+menu_prompt = <<EOS
+Hey, Movie Lover! What would you like to do?
+
+1. Watch a movie
+2. Add to your list
+3. View your list
+4. Edit your list
+5. Review a movie
+6. Exit
+EOS
+
+if ARGV.size == 1 and ARGV[0] == "manage"
+  loop do
+    choose do |menu|
+      menu.prompt = ""
+
+      movies_controller = MoviesController.new
+      menu.choice('Add to your list') do
+        user_input = ask("Great! What is the name of the movie?")
+        response = movies_controller.add(user_input)
+        say(response) unless response.nil?
+      end
+      menu.choice('View your list') do
+        say(movies_controller.index)
+        exit
+      end
+      menu.choice('Exit') do
+        say("I'll be back!\n")
+        exit
+      end
+    end
+  end
+else
+  puts "[Help] Run as: ./termovie manage"
+end
