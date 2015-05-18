@@ -21,13 +21,22 @@ if ARGV.size == 1 and ARGV[0] == "manage"
       menu.prompt = ""
 
       movies_controller = MoviesController.new
-      menu.choice('Add to your list') do
-        user_input = ask("Great! What is the name of the movie?")
-        response = movies_controller.add(user_input)
-        say(response) unless response.nil?
+      menu.choice('Watch a Movie') do
+        user_input = ask("How are you feeling?")
       end
-      menu.choice('View your list') do
+      menu.choice('Add to your list') do
+        movies_controller.prompt
+      end
+      menu.choice('View Your list') do
         say(movies_controller.index)
+        exit
+      end
+      menu.choice('Edit your list') do
+        say("Cool\n")
+        exit
+      end
+      menu.choice('Review a movie') do
+        say("Cool\n")
         exit
       end
       menu.choice('Exit') do
@@ -39,3 +48,45 @@ if ARGV.size == 1 and ARGV[0] == "manage"
 else
   puts "[Help] Run as: ./termovie manage"
 end
+
+
+# Hey, Movie Lover! What would you like to do?
+
+# 1. Watch a movie
+# 2. Add to your list
+# 3. View Your list
+# 4. Edit your list
+# 5. Review a movie
+# 6. Exit
+
+# > 1
+
+# How are you feeling?
+
+# 1. Funny
+# 2. In Love
+# 3. Dramatic
+# 4. Educational
+# 5. Scary
+# 6. Indestrutable
+# 7. Out of this World
+
+# > 1
+
+# That's Great! I'm feeling pretty funny, myself. Let's Watch a funny movie from the 60's? Yes or No?
+
+# > No
+
+# OK OK, What about the 70's? Yes or No?
+
+# > No
+
+# OK OK, What about the 80's? Yes or No?
+
+# > No
+
+# OK OK, What about the 90's? Yes or No?
+
+# > Yes
+
+# Great! Let's Try this one! http://www.netflix.com/WiPlayer?movieid=70000782&trkid=13463723&tctx=0,35,33841568-df9e-46a3-b2b9-5b349788edf8-29125479 NOTE: If you hold command and double-click the link in the terminal, it will open the link in the default browser.

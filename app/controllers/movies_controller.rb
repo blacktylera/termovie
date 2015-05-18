@@ -18,9 +18,28 @@ class MoviesController
     name_cleaned = name.strip
     movie = Movie.new(name_cleaned)
     if movie.save
-      "\"#{name}\" has been added\n"
+      "\"#{name}\" has been added to your collection!\n"
     else
-      movies.errors
+      movie.errors
     end
+  end
+
+  def remove(name)
+    if Movie.delete(name)
+      "#{name} was deleted successfully"
+    else
+      "Movie not found"
+    end
+  end
+
+
+  def prompt
+    name = ask("Great! What is the name of the movie?")
+    rating = ask("What is this movie rated?")
+    director = ask("Who is the director of this movie?")
+    genre = ask("What is the genre?")
+    url = ask("And the URL?")
+    add_response = add(name)
+    say(add_response) unless add_response.nil?
   end
 end
