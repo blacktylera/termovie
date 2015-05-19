@@ -6,7 +6,7 @@ class MoviesController
       movies = Movie.all
       movies_string = ""
       movies.each_with_index do |movie, index|
-        movies_string << "#{index + 1}. #{movie.name}\n"
+        movies_string << "#{index + 1}. #{movie.name}\n   Rating: #{movie.rating}\n   Director: #{movie.director}\n   Genre: #{movie.genre}\n   URL: #{movie.url}\n"
       end
       movies_string
     else
