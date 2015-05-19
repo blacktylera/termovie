@@ -7,10 +7,10 @@ class Database
     CREATE TABLE IF NOT EXISTS movies (
       id integer PRIMARY KEY AUTOINCREMENT,
       name varchar(255) NOT NULL,
-      rating varchar(4) NOT NULL,
-      director varchar(255) NOT NULL,
-      genre varchar(20) NOT NULL,
-      url varchar (500) NOT NULL
+      rating varchar(4),
+      director varchar(255),
+      genre varchar(20),
+      url varchar (500)
     );
     SQL
   end

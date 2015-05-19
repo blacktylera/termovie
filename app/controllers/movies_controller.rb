@@ -14,9 +14,13 @@ class MoviesController
     end
   end
 
-  def add(name)
+  def add(name, rating, director, genre, url)
     name_cleaned = name.strip
-    movie = Movie.new(name_cleaned)
+    rating_cleaned = rating.strip
+    director_cleaned = director.strip
+    genre_cleaned = genre.strip
+    url_cleaned = url.strip
+    movie = Movie.new(name_cleaned, rating_cleaned, director_cleaned, genre_cleaned, url_cleaned)
     if movie.save
       "\"#{name}\" has been added to your collection!\n"
     else
@@ -24,22 +28,13 @@ class MoviesController
     end
   end
 
-  def remove(name)
-    if Movie.delete(name)
-      "#{name} was deleted successfully"
-    else
-      "Movie not found"
-    end
-  end
-
-
   def prompt
     name = ask("Great! What is the name of the movie?")
     rating = ask("What is this movie rated?")
     director = ask("Who is the director of this movie?")
     genre = ask("What is the genre?")
     url = ask("And the URL?")
-    add_response = add(name)
-    say(add_response) unless add_response.nil?
+    add= add(name, rating, director, genre, url)
+    say(add) unless add.nil?
   end
 end

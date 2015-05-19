@@ -1,23 +1,24 @@
 class Movie
   attr_reader :id, :errors
-  attr_accessor :name, :rating, :director, :genre, :url
+  attr_accessor :name, :rating, :director, :genre, :url, :id
 
-  def initialize(name = nil)
-    self.name = name
-    self.rating = rating
-    self.director = director
-    self.genre = genre
-    self.url = url
+  def initialize(name, rating, director, genre, url)
+    @name = name
+    @rating = rating
+    @director = director
+    @genre = genre
+    @url = url
   end
 
   def self.all
-    Database.execute("select name from movies order by name ASC").map do |row|
-      movie = Movie.new
-      movie.name = row[0]
-      movie.rating = row[1]
-      movie.director = row[2]
-      movie.genre = row[3]
-      movie.url = row[4]
+    Database.execute("select * from movies order by name ASC").map do |row|
+      movie = Movie.new(row["name"], row["rating"], row["director"], row["genre"], row["url"])
+      movie.id = row["id"]
+      movie.name = row["name"]
+      movie.rating = row["rating"]
+      movie.director = row["director"]
+      movie.genre = row["genre"]
+      movie.url = row["url"]
       movie
     end
   end
@@ -38,7 +39,7 @@ class Movie
 
   def save
     return false unless valid?
-    Database.execute("INSERT INTO movies (name) VALUES (?)", name)
-    @id = Database.execute("SELECT last_insert_rowid()")[0]['last_insert_rowid()']
+    Database.execute("INSERT INTO movies (name, rating, director, genre, url) VALUES (?, ?, ?, ?, ?)", name, rating, director, genre, url)
+    @id = Database.execute("SELECT last_insert_rowid()")[0][0]
   end
 end
