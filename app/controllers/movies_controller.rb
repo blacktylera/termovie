@@ -28,6 +28,73 @@ class MoviesController
     end
   end
 
+  def edit_menu
+    say("Would you like to?")
+    choose do |menu|
+      menu.prompt = ""
+      menu.choice("Edit") do
+        edit_movie
+      end
+      menu.choice("Delete") do
+        destroy
+      end
+      menu.choice("Exit") do
+        exit
+      end
+    end
+  end
+
+  def edit_movie
+    movie = Movie.all
+    movies_controller = MoviesController.new
+    say("Which movie would you like to edit?")
+    say(movies_controller.index)
+    movie_index = ask('')
+    while movie_index.empty? or movie_index.nil?
+      puts "'#{movie_index}' isn't a movie!"
+      say("Which movie would you like to edit?")
+      say(movies_controller.index)
+      movie_index = ask('')
+    end
+    movie_index = movie_index.to_i - 1
+    movie = movie[movie_index]
+    old_movie = "#{movie.name} #{movie.rating} #{movie.director} #{movie.genre} #{movie.url}"
+    choice = ask("What would you like to edit: Name, Rating, Director, Genre, or URL ?")
+    if choice == "name"
+      movie.name = ask("What is the REAL name?")
+      while movie.name.empty?
+        movie.name = ask("What is the REAL name?")
+      end
+    elsif choice == "rating"
+      movie.rating = ask("What is the REAL rating?")
+      while movie.rating.empty?
+        movie.rating = ask("What is the REAL rating?")
+      end
+    elsif choice == "director"
+      movie.director = ask("Who is the REAL director?")
+      while movie.director.empty?
+        movie.director = ask("Who is the REAL director?")
+      end
+    elsif choice == "genre"
+      movie.genre = ask("What is the REAL genre?")
+      while movie.genre.empty?
+        movie.genre = ask("What is the REAL genre?")
+      end
+    elsif choice == "url"
+      movie.url = ask("What is the REAL url?")
+      while movie.url.empty?
+        movie.url = ask("What is the REAL url?")
+      end
+    end
+    if movie.save
+      say("Your movie has been updated!")
+      say(movies_controller.index)
+      return
+    else
+      say(movie.errors)
+    end
+  end
+
   def prompt
     name = ask("Great! What is the name of the movie?")
     rating = ask("What is this movie rated?")

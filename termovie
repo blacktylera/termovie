@@ -16,6 +16,8 @@ Hey, Movie Lover! What would you like to do?
 EOS
 
 if ARGV.size == 1 and ARGV[0] == "manage"
+  say("Hey, Movie Lover! What would you like to do?\n")
+
   loop do
     choose do |menu|
       menu.prompt = ""
@@ -29,15 +31,12 @@ if ARGV.size == 1 and ARGV[0] == "manage"
       end
       menu.choice('View Your list') do
         say(movies_controller.index)
-        exit
       end
       menu.choice('Edit your list') do
-        say("Cool\n")
-        exit
+        movies_controller.edit_menu
       end
       menu.choice('Review a movie') do
         say("Cool\n")
-        exit
       end
       menu.choice('Exit') do
         say("I'll be back!\n")

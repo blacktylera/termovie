@@ -3,11 +3,16 @@ class Movie
   attr_accessor :name, :rating, :director, :genre, :url, :id
 
   def initialize(name, rating, director, genre, url)
+    @id = id
     @name = name
     @rating = rating
     @director = director
     @genre = genre
     @url = url
+  end
+
+  def ==(other)
+    other.is_a?(Movie) && other.id == self.id
   end
 
   def self.all
@@ -27,6 +32,24 @@ class Movie
     Database.execute("select count(id) from movies")[0][0]
   end
 
+  def self.find(id)
+    row = Database.execute("select * from movies where id = ?", id).first
+    if row.nil?
+      nil
+    else
+      populate_from_database(row)
+    end
+  end
+
+  def self.find_by_name(name)
+    row = Database.execute("select * from movies where name LIKE ?", name).first
+    if row.nil?
+      nil
+    else
+      populate_from_database(row)
+    end
+  end
+
   def valid?
     if name.nil? or name.empty? or /^\d+$/.match(name)
       @errors = "\"#{name}\" is not a valid movie name."
@@ -39,7 +62,20 @@ class Movie
 
   def save
     return false unless valid?
-    Database.execute("INSERT INTO movies (name, rating, director, genre, url) VALUES (?, ?, ?, ?, ?)", name, rating, director, genre, url)
-    @id = Database.execute("SELECT last_insert_rowid()")[0][0]
+    if @id.nil?
+      Database.execute("INSERT INTO movies (name, rating, director, genre, url) VALUES (?, ?, ?, ?, ?)", name, rating, director, genre, url)
+      @id = Database.execute("SELECT last_insert_rowid()")[0][0]
+    else
+      Database.execute("UPDATE movies SET name = ?, rating = ?, director = ?, genre = ?, url = ? WHERE id = ?", name, rating, director, genre, url, id)
+    end
+  end
+
+  private
+
+  def self.populate_from_database(row)
+    movie = Movie.new
+    movie.name = row['name']
+    movie.instance_variable_set(:@id, row['id'])
+    movie
   end
 end
