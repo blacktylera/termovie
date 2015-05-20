@@ -23,23 +23,23 @@ if ARGV.size == 1 and ARGV[0] == "manage"
       menu.prompt = ""
 
       movies_controller = MoviesController.new
-      menu.choice('Watch a Movie') do
-        user_input = ask("How are you feeling?")
+      menu.choice('Watch a movie') do
+        movies_controller.watch_prompt
       end
       menu.choice('Add to your list') do
         movies_controller.prompt
       end
-      menu.choice('View Your list') do
+      menu.choice('View your list') do
         say(movies_controller.index)
       end
       menu.choice('Edit your list') do
         movies_controller.edit_menu
       end
       menu.choice('Review a movie') do
-        say("Cool\n")
+        say("Feature coming soon!\n")
       end
       menu.choice('Exit') do
-        say("I'll be back!\n")
+        say("'I'll be back!'\n")
         exit
       end
     end

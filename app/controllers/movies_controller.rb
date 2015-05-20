@@ -46,7 +46,6 @@ class MoviesController
 
   def edit_movie
     movie = Movie.all
-    puts movie.to_s
     movies_controller = MoviesController.new
     say("Which movie would you like to edit?")
     say(movies_controller.index)
@@ -59,11 +58,10 @@ class MoviesController
     end
     movie_index = movie_index.to_i - 1
     movie = movie[movie_index]
-    old_movie = "#{movie.name} #{movie.rating} #{movie.director} #{movie.genre} #{movie.url}"
     choice = ask("What would you like to edit: Name, Rating, Director, Genre, or URL ?")
     if choice == "name"
       movie.name = ask("What is the REAL name?")
-      while movie.name.empty?
+      while movie.name.empty? or choice != "name"
         movie.name = ask("What is the REAL name?")
       end
     elsif choice == "rating"
@@ -115,5 +113,12 @@ class MoviesController
     url = ask("And the URL?")
     add= add(name, rating, director, genre, url)
     say(add) unless add.nil?
+  end
+
+  def watch_prompt
+    user_input = ask("How are you feeling?")
+    say("'Frankly, my user, I don't give a damn.' How about you watch this...")
+    response_url = Movie.get_movie_url
+    say("#{response_url["url"]}")
   end
 end

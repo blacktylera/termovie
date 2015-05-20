@@ -82,4 +82,8 @@ class Movie
     movie.instance_variable_set(:@id, row['id'])
     movie
   end
+
+  def self.get_movie_url
+    Database.execute("SELECT url FROM movies ORDER BY random() LIMIT 1")[0]
+  end
 end
