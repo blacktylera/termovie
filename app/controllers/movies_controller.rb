@@ -107,10 +107,30 @@ class MoviesController
 
   def prompt
     name = ask("Great! What is the name of the movie?")
+      while name.empty? do
+        say("'What we have here is a failure to communicate.'")
+        name = ask("Great! What is the name of the movie?")
+      end
     rating = ask("What is this movie rated?")
+      while rating.empty? do
+        say("'What we have here is a failure to communicate.'")
+        rating = ask("What is this movie rated?")
+      end
     director = ask("Who is the director of this movie?")
+      while director.empty? do
+        say("'What we have here is a failure to communicate.'")
+        director = ask("Who is the director of this movie?")
+      end
     genre = ask("What is the genre?")
+      while genre.empty? do
+        say("'What we have here is a failure to communicate.'")
+        genre = ask("What is the genre?")
+      end
     url = ask("And the URL?")
+      while url.empty? do
+        say("'What we have here is a failure to communicate.'")
+        url = ask("And the URL?")
+      end
     add= add(name, rating, director, genre, url)
     say(add) unless add.nil?
   end
