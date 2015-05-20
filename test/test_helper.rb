@@ -23,3 +23,7 @@ end
 def main_menu
   "Hey, Movie Lover! What would you like to do?\n1. Watch a movie\n2. Add to your list\n3. View your list\n4. Edit your list\n5. Review a movie\n6. Exit\n"
 end
+
+def main_menu_no_greeting
+	"1. Watch a movie\n2. Add to your list\n3. View your list\n4. Edit your list\n5. Review a movie\n6. Exit\n"
+end
