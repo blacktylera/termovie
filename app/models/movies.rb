@@ -70,6 +70,10 @@ class Movie
     end
   end
 
+  def self.destroy(movie_index)
+    Database.execute("DELETE FROM movies where id=?", movie_index)
+  end
+
   private
 
   def self.populate_from_database(row)

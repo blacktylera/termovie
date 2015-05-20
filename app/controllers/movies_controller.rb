@@ -36,7 +36,7 @@ class MoviesController
         edit_movie
       end
       menu.choice("Delete") do
-        destroy
+        destroy_movie
       end
       menu.choice("Exit") do
         exit
@@ -46,6 +46,7 @@ class MoviesController
 
   def edit_movie
     movie = Movie.all
+    puts movie.to_s
     movies_controller = MoviesController.new
     say("Which movie would you like to edit?")
     say(movies_controller.index)
@@ -93,6 +94,17 @@ class MoviesController
     else
       say(movie.errors)
     end
+  end
+
+  def destroy_movie
+    movie = Movie.all
+    movies_controller = MoviesController.new
+    say("Which movie would you like to delete?")
+    say(movies_controller.index)
+    movie_index = ask('')
+    movie_index = movie_index.to_i - 1
+    movie[movie_index]
+    Movie.destroy(movie[movie_index].id)
   end
 
   def prompt
